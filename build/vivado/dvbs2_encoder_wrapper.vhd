@@ -78,7 +78,8 @@ entity dvbs2_encoder_wrapper is
     m_axis_tvalid     : out std_logic;
     m_axis_tlast      : out std_logic;
     m_axis_tready     : in  std_logic;
-    m_axis_tdata      : out std_logic_vector(IQ_WIDTH - 1 downto 0));
+    --m_axis_tdata      : out std_logic_vector(IQ_WIDTH - 1 downto 0));
+    m_axis_tdata      : out std_logic_vector(128 - 1 downto 0));
 end dvbs2_encoder_wrapper;
 
 architecture rtl of dvbs2_encoder_wrapper is
