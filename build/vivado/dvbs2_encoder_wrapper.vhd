@@ -216,10 +216,41 @@ begin
       s_tlast         => encoder_tlast,
       s_tready        => encoder_tready,
       -- AXI output
-      m_tready        => m_axis_tready,
+      m_tready        => embiggener_tready,
+      m_tvalid        => embiggener_tvalid,
+      m_tlast         => embiggener_tlast,
+      m_tdata         => embiggener_tdata);
+
+
+-- insert embiggener here
+-- AXI output from encoder goes to input of embiggener
+-- AXI output from embiggener takes the old outputs of encoder
+
+
+  axi_embiggener : entity fpga_cores.axi_embiggener
+    generic map (
+      -- AXI streaming widths
+      INPUT_DATA_WIDTH => INPUT_DATA_WIDTH,
+      OUTPUT_DATA_WIDTH => OUTPUT_DATA_WIDTH,
+      IGNORE_TKEEP         => IGNORE_TKEEP)
+    port map (
+      clk             => clk,
+      rst             => rst,
+      -- Input data where the first 4-byte word is interpreted as configuration
+      s_tvalid        => embiggener_tvalid,
+      s_tready        => embiggener_tready,
+      s_tlast         => embiggener_tlast,
+      s_tdata         => embiggener_tdata,
+      -- Output data
       m_tvalid        => m_axis_tvalid,
-      m_tlast         => m_axis_tlast,
+      m_tready        => m_axis_tready,
+      m_tlast         => m_axis_tlast, 
       m_tdata         => m_axis_tdata);
+
+
+
+
+
 
   -- Reset from the AXI Stream FIFOs are a single cycle, extend it to 16 cycles to ensure
   -- DVB encoder is properly reset
