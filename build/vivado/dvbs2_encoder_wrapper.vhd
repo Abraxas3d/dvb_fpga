@@ -150,7 +150,7 @@ architecture rtl of dvbs2_encoder_wrapper is
   signal embiggener_tready     : std_logic;
   signal embiggener_tvalid     : std_logic;
   signal embiggener_tlast      : std_logic;
-  signal embiggener_tdata      : std_logic_vector(128-1 downto 0);
+  signal embiggener_tdata      : std_logic_vector(OUTPUT_DATA_WIDTH - 1 downto 0);
 
 begin
 
